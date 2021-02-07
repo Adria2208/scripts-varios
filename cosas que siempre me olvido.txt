@@ -1,0 +1,4 @@
+--Traspile sass to css--
+
+sass --watch scss/styles.scss:css/styles.css
+

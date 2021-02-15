@@ -1,4 +1,15 @@
 --Traspile sass to css--
 
-sass --watch scss/styles.scss:css/styles.css
+sass --watch scss/main.scss:css/styles.css
+
+
+--Install bootstrap Angular--
+
+            "styles": [
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.js"
+            ]
 

@@ -1,0 +1,54 @@
+--Sass responsive font sizes--
+
+@function pow($number, $exponent) {
+    $value: 1;
+
+    @if $exponent > 0 {
+        @for $i from 1 through $exponent {
+            $value: $value * $number;
+        }
+    }
+
+    @return $value;
+}
+
+@function getFontSize($index){
+    $tamanyo: pow(1.2, $index) * 16;
+
+    @return $tamanyo;
+}
+
+$tamanyo:(
+    1: 576px,
+    2: 768px,
+    3: 992px
+);
+
+$tomanyo:(
+    "movil": "576px",
+    "tablet": "768px",
+    "desktop": "992px"
+);
+
+@function getBreakPoint($key){
+    @return unquote(map-get($tomanyo, $key));
+}
+
+
+@function getBreakPointKeys(){
+    @return map-keys($tomanyo);
+}
+
+@for $i from 1 to 4 {
+    $device: nth(getBreakPointKeys(),$i);
+    
+    @media (min-width: getBreakPoint($device)){
+        @for $j from 1 to 4 {
+            .g--font-size-#{$j}\@#{$device}{
+                font-size: unquote(getFontSize($j) + "px");
+            }
+        }
+    }
+}
+
+

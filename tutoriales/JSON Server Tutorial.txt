@@ -1,0 +1,113 @@
+npm install json-server
+
+json-server --watch db.json
+
+
+//CREAR EL MODELO (A MANO)
+mkdir app/modelos
+touch empleados.ts
+
+export interface Empleado {
+
+  id:number;
+  nombre:string;
+  apellido:string;
+  email:string;
+
+}
+
+ng g s servicios/empleados
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Empleado } from '../modelos/empleados';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmpleadosService {
+
+  constructor(private http:HttpClient) { }
+
+	//URL del servidor en json-server
+  url:string="http://localhost:3000/empleados"
+
+  getTrabajadores():Observable<Empleado[]>{
+
+    return this.http.get<Empleado[]>(this.url);
+  }
+}
+
+ng g c empleados-api
+
+import { Component, OnInit } from '@angular/core';
+import { Empleado } from "../modelos/empleados";
+import { EmpleadosService } from "../servicios/empleados.service";
+
+@Component({
+  selector: 'app-empleados-api',
+  templateUrl: './empleados-api.component.html',
+  styleUrls: ['./empleados-api.component.css']
+})
+
+export class EmpleadosApiComponent implements OnInit {
+
+  empleados:Array<Empleado>=[];
+
+  constructor(private servicioEmpleados:EmpleadosService) { }
+
+  ngOnInit(): void {
+    //importante, sino no carga nada
+    this.carga();
+  }
+
+  carga(){
+    this.servicioEmpleados.getTrabajadores()
+    .subscribe(empleados=>this.empleados=empleados);
+    console.log(this.empleados);
+  }
+
+}
+
+//empleados-api.component.html
+<h1>Listado de Trabajadores</h1>
+<table class="table table-bordered table-striped tabla" style="margin-top: 40px;">
+  <thead>
+    <tr class="filters">
+      <th>Nombre</th>
+      <th>Apellido</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let empleado of empleados">
+      <td>{{ empleado.nombre }}</td>
+      <td>{{ empleado.apellido }}</td>
+    </tr>
+  </tbody>
+</table>
+
+//app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+import { EmpleadosService } from "./servicios/empleados.service";
+
+
+import { AppComponent } from './app.component';
+import { EmpleadosApiComponent } from './empleados-api/empleados-api.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    EmpleadosApiComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule
+  ],
+  providers: [EmpleadosService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

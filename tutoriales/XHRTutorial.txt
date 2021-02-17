@@ -1,0 +1,51 @@
+//XHR Load JSON from "users.json"
+      function loadUsers() {
+        //Create XHR Object
+        var xhr = new XMLHttpRequest();
+        // OPEN - type, url/file, async
+        xhr.open("GET", "users.json", true);
+
+    //OPTIONAL
+    xhr.onprogress = function() {
+        //Shows the ready state (3 = loading)
+        console.log("READYSTATE: ", this.readyState);
+    }
+
+//Loads the response from "xhr.open"
+        xhr.onload = function () {
+          if ((this.status = 200)) {
+
+            //"this.responseText" is a string, use JSON.parse to make it a json format
+
+            var users = JSON.parse(this.responseText);
+            var output = "";
+
+            for (var i in users) {
+              output +=
+                "<ul>" +
+                "<li>ID: " +
+                users[i].id +
+                "</li>" +
+                "<li>Name: " +
+                users[i].name +
+                "</li>" +
+                "<li>Email: " +
+                users[i].email +
+                "</li>" +
+                "</ul>";
+            }
+
+            document.getElementById("users").innerHTML = output;
+          } else if ((this.status = 404)) {
+            document.getElementById("text").innerHTML = "Not Found";
+          }
+        };
+
+        //Handle errors
+        xhr.onerror = function () {
+          console.log("Request Error");
+        };
+
+        //IMPORTANT!!!!!! Sends request
+        xhr.send();
+      }

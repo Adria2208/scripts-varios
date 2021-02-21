@@ -14,9 +14,14 @@ mkdir 06_global;
 touch main.scss;
 echo "// IMPORTS
 
+//UTILITIES
 //@import '01_utilities/variables';
 //@import '01_utilities/functions';
 //@import '01_utilities/mixins';
+
+//BASE
+//@import '02_base/reset';
+
 
 //LAYOUTS
 //@import '03_layout/l-ejemplo';
@@ -39,5 +44,5 @@ touch _variables.scss;
 cd ..;
 
 cd 02_base;
-touch _override.scss;
-touch _reset.scss;
+touch _reset1.scss;
+touch _reset2.scss;

@@ -44,5 +44,6 @@ touch _variables.scss;
 cd ..;
 
 cd 02_base;
+touch _box-sizing.scss;
 touch _reset1.scss;
 touch _reset2.scss;

@@ -1,0 +1,44 @@
+//01_utilities/variables
+$font-size:(
+    "1":"40px",
+    "2":"50px",
+    "3":"55px",
+    "4":"70px",
+    "5":"90px"
+);
+
+//01_utilities/functions
+@function getFontSizeKeys(){
+    @return map-keys($font-size);
+}
+
+@function getTamanyoPantallaKeys(){
+    @return map-keys($font-size);
+}
+
+@function getFontSize($key){
+    @return unquote(map-get($font-size, $key));
+}
+
+@function getTamanyoPantalla($key){
+    @return unquote(map-get($tamanyoPantalla, $key));
+}
+
+//06_global/g--font-size
+.g--font-size {
+    @each $key in getFontSizeKeys() {
+        &-#{$key} {
+            font-size: getFontSize($key);
+        }
+    }
+
+    @each $name in getTamanyoPantallaKeys() {
+        @media(min-width: getTamanyoPantalla($name)) {
+            @each $key in getFontSizeKeys() {
+                &-#{$key}\@#{$name} {
+                    font-size: getFontSize($key);
+                }
+            }
+        }
+    }
+}

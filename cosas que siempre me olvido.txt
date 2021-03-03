@@ -12,4 +12,9 @@ sass --watch scss/main.scss:css/styles.css
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.js"
             ]
+			
+--Bootstrap link:css that actually works--
+    
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
 
